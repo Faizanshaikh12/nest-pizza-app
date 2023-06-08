@@ -21,7 +21,7 @@ export class UsersService {
     }
   }
 
-  async register(body): Promise<any> {
+  async register(body): Promise<User> {
     const { email } = body;
     const user = await this.userModel.findOne({ email });
     if (user) throw new BadRequestException('User Email Address Already Exist')
