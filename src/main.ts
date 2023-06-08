@@ -30,12 +30,13 @@ async function bootstrap() {
       .build();
 
     const document = SwaggerModule.createDocument(app, config);
-    SwaggerModule.setup("api-docs", app, document);
+    SwaggerModule.setup("/api-docs", app, document);
   }
   const PORT = CONFIG.nest.port || 3000;
   await app.listen(PORT, async () => {
     const logger = new Logger();
-    logger.log(`Server started listening: ${PORT}`);
+    logger.log(`Server started listening: http://localhost:${PORT}`);
+    logger.log(`Swagger Documentation: http://localhost:${PORT}/api-docs`);
   });
 }
 
