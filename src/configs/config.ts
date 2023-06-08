@@ -14,5 +14,8 @@ export const CONFIG: IConfig = {
     description: 'Pizza API Endpoint',
     version: '1.0',
     path: commonConstants.API_PREFIX,
+  },
+  database: {
+    url: commonConstants.MONGO_URL
   }
 };

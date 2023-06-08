@@ -2,6 +2,7 @@ export interface IConfig {
   nest: NestConfig;
   cors: CorsConfig;
   swagger: SwaggerConfig;
+  database: DbConfig;
 }
 
 export interface NestConfig {
@@ -10,6 +11,10 @@ export interface NestConfig {
 
 export interface CorsConfig {
   enabled: boolean;
+}
+
+export interface DbConfig {
+  url: string;
 }
 
 export interface SwaggerConfig {
