@@ -4,7 +4,7 @@ import { Factory } from "nestjs-seeder";
 
 export type MenuDocument = HydratedDocument<Menu>;
 
-@Schema()
+@Schema({ versionKey: false })
 export class Menu {
   @Factory(faker => faker.lorem.word())
   @Prop({ required: true })
