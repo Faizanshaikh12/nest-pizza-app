@@ -16,7 +16,7 @@ export class User {
   email: string;
 
   @Factory(faker => faker.internet.password())
-  @Prop({ required: true })
+  @Prop({ required: true, unique: true })
   password: string;
 
   @Factory(faker => faker.helpers.arrayElement([Roles.CUSTOMER, Roles.ADMIN]))

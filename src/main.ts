@@ -6,11 +6,15 @@ import { json, urlencoded } from "express";
 import { ConfigService } from "@nestjs/config";
 import { SwaggerConfig } from "./configs/config.interface";
 import { CONFIG } from "./configs/config";
-import { Logger } from "@nestjs/common";
+import { Logger, ValidationPipe } from "@nestjs/common";
+import { GlobalExceptionFilter } from "./filters/global-exception.filter";
 
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+
+  app.useGlobalPipes(new ValidationPipe({ forbidUnknownValues: false }));
+  app.useGlobalFilters(new GlobalExceptionFilter());
 
   app.enableCors();
   app.setGlobalPrefix(commonConstants.API_PREFIX);
