@@ -17,6 +17,7 @@ export class UsersService {
     } else {
       const checkPassword = user.password === password;
       if (!checkPassword) throw new BadRequestException("Wrong email and password");
+      delete user.password
       return user;
     }
   }
