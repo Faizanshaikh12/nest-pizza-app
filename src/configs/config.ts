@@ -3,7 +3,7 @@ import { IConfig } from "./config.interface";
 
 export const CONFIG: IConfig = {
   nest: {
-    port: +commonConstants.PORT,
+    port: commonConstants.PORT,
   },
   cors: {
     enabled: true,

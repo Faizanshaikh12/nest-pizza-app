@@ -5,7 +5,6 @@ import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
 import { json, urlencoded } from "express";
 import { ConfigService } from "@nestjs/config";
 import { SwaggerConfig } from "./configs/config.interface";
-import { CONFIG } from "./configs/config";
 import { Logger, ValidationPipe } from "@nestjs/common";
 import { GlobalExceptionFilter } from "./filters/global-exception.filter";
 
@@ -36,7 +35,7 @@ async function bootstrap() {
     const document = SwaggerModule.createDocument(app, config);
     SwaggerModule.setup("/api-docs", app, document);
   }
-  const PORT = CONFIG.nest.port || 3000;
+  const PORT = process.env.PORT || 3000;
   await app.listen(PORT, async () => {
     const logger = new Logger();
     logger.log(`Server started listening: http://localhost:${PORT}`);
