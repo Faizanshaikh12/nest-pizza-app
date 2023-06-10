@@ -5,10 +5,12 @@ import { Model } from "mongoose";
 
 @Injectable()
 export class MenusService {
-  constructor(@InjectModel(Menu.name) private menuModel: Model<Menu> ) {
+  constructor(@InjectModel(Menu.name) private menuModel: Model<Menu>) {
   }
 
-  async getMenus(): Promise<Menu[]>{
-    return this.menuModel.find()
+  async getMenus(menusIds): Promise<Menu[]> {
+    let query = {};
+    query = menusIds.length !== 0 ? { _id: { $in: menusIds } } : query;
+    return this.menuModel.find(query);
   }
 }
