@@ -11,7 +11,6 @@ export class MenusController {
   @Post('')
   @ApiOperation({ summary: 'List Menu' })
   async getMenus(@Body() body: string[]): Promise<Menu[]> {
-    console.log(body);
     return this.menusService.getMenus(body);
   }
 

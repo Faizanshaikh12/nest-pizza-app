@@ -1,7 +1,8 @@
-import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
-import { HydratedDocument } from "mongoose";
-import { Roles } from "../constants/constants";
-import { Factory } from "nestjs-seeder";
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { HydratedDocument, Query } from 'mongoose';
+import { Roles } from '../constants/constants';
+import { Factory } from 'nestjs-seeder';
+import { AuthHelpers } from '../helpers/auth.helper';
 
 export type UserDocument = HydratedDocument<User>;
 
@@ -15,7 +16,7 @@ export class User {
   @Prop({ required: true, unique: true })
   email: string;
 
-  @Factory(faker => faker.internet.password())
+  @Factory(faker => faker.helpers.arrayElement([AuthHelpers.hash('123456')]))
   @Prop({ required: true })
   password: string;
 
@@ -25,3 +26,19 @@ export class User {
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
+
+UserSchema.pre<User>('save', async function(next) {
+  try {
+    const hashedPassword = await AuthHelpers.hash(this.password);
+    this.password = hashedPassword;
+  } catch (error) {
+    return next(error);
+  }
+
+  next();
+});
+
+UserSchema.pre<Query<User, User>>('find', async function(next) {
+  this.select('-password');
+  next();
+});
