@@ -17,5 +17,5 @@ export const CONFIG: IConfig = {
   },
   database: {
     url: commonConstants.MONGO_URL
-  }
+  },
 };

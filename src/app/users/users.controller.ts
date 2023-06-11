@@ -3,6 +3,7 @@ import { UsersService } from './users.service';
 import { ApiOperation, ApiTags } from "@nestjs/swagger";
 import { User } from "../../schemas/user.schema";
 import { LoginDto, RegisterDto } from "./users.dto";
+import { IAuthUser } from './users.interface';
 
 @ApiTags('users')
 @Controller('users')
@@ -11,7 +12,7 @@ export class UsersController {
 
   @Post('login')
   @ApiOperation({ summary: 'User Login' })
-  async login(@Body() body: LoginDto): Promise<User>{
+  async login(@Body() body: LoginDto): Promise<IAuthUser>{
     return this.usersService.login(body);
   }
 
