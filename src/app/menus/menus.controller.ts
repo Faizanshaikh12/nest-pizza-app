@@ -6,7 +6,7 @@ import { AuthGuard } from '../../guards/auth.guard';
 
 @ApiBearerAuth()
 @ApiTags('menus')
-@UseGuards(AuthGuard)
+// @UseGuards(AuthGuard)
 @Controller('menus')
 export class MenusController {
   constructor(private readonly menusService: MenusService) {}
