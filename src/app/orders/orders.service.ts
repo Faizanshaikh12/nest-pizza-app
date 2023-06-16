@@ -30,7 +30,7 @@ export class OrdersService {
   }
 
   async find(): Promise<Order> {
-    return this.orderModel.find({ status: { $ne: "completed" } },
+    return this.orderModel.find({ status: { $ne: "COMPLETED" } },
       null,
       { sort: { "createdAt": -1 } })
       .populate("customerId", "-password")
@@ -40,5 +40,16 @@ export class OrdersService {
         console.log("err", err);
         return err;
       });
+  }
+
+  async updateOrderStatus(data: any): Promise<{ message: string }> {
+    // console.log("log order service ----------->", {_id : data.orderId }, {status: data.OrderStatus});
+   return  this.orderModel.updateOne({_id : data.orderId }, {status: data.OrderStatus} ).then((res) => {
+     console.log(res);
+      return { message: "Status Changed" };
+    }).catch(err => {
+      console.log(err);
+      return err
+    });
   }
 }

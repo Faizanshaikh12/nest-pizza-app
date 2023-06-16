@@ -4,8 +4,7 @@ import {
   IsBoolean,
   IsEnum,
   IsNotEmpty,
-  IsNotEmptyObject,
-  IsNumber, IsObject,
+  IsNumber,
   IsString
 } from "class-validator";
 import { Type } from "class-transformer";
@@ -16,7 +15,10 @@ export enum PaymentTypes {
 }
 
 export enum OrderStatus {
-  PENDING = "PENDING",
+  ORDER_PLACE = "ORDER_PLACE",
+  ORDER_CONFIRM = "ORDER_CONFIRM",
+  PREPARATION = "PREPARATION",
+  OUT_FOR_DELIVERY = "OUT_FOR_DELIVERY",
   COMPLETED = "COMPLETED",
   CANCELLED = "CANCELLED"
 }
@@ -79,4 +81,16 @@ export class CreateOrderDto {
   @IsBoolean()
   @IsNotEmpty()
   paymentStatus: boolean;
+}
+
+export class UpdateOrderStatusDto {
+  @ApiProperty()
+  @IsString()
+  @IsNotEmpty()
+  orderId: string;
+
+  @ApiProperty()
+  @IsString()
+  @IsNotEmpty()
+  OrderStatus: string;
 }

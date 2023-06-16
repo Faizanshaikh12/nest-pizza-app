@@ -5,9 +5,8 @@ import { MongooseModule } from "@nestjs/mongoose";
 import { ConfigModule } from "@nestjs/config";
 import { UsersModule } from "./app/users/users.module";
 import { CONFIG } from "./configs/config";
-import { MenusModule } from './app/menus/menus.module';
-import { JwtModule } from '@nestjs/jwt';
-import { commonConstants } from './constants/constants';
+import { MenusModule } from "./app/menus/menus.module";
+import { OrdersModule } from "./app/orders/orders.module";
 
 @Module({
   imports: [
@@ -15,11 +14,12 @@ import { commonConstants } from './constants/constants';
       isGlobal: true,
       load: [() => CONFIG],
       cache: true,
-      expandVariables: true,
+      expandVariables: true
     }),
     MongooseModule.forRoot(process.env.MONGO_URL),
     UsersModule,
-    MenusModule
+    MenusModule,
+    OrdersModule
   ],
   controllers: [AppController],
   providers: [AppService]

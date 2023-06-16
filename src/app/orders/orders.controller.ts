@@ -1,13 +1,13 @@
 import { Body, Controller, Get, Param, Post, UseGuards } from "@nestjs/common";
 import { OrdersService } from "./orders.service";
-import { CreateOrderDto } from "./orders.dto";
+import { CreateOrderDto, UpdateOrderStatusDto } from "./orders.dto";
 import { ApiBearerAuth, ApiBody, ApiOperation, ApiTags } from "@nestjs/swagger";
 import { AuthGuard } from "../../guards/auth.guard";
 
 @ApiTags("orders")
 @Controller("orders")
 @ApiBearerAuth()
-// @UseGuards(AuthGuard)
+@UseGuards(AuthGuard)
 
 export class OrdersController {
   constructor(private readonly ordersService: OrdersService) {
@@ -30,6 +30,13 @@ export class OrdersController {
   @ApiOperation({ summary: "Get All Customer Order"})
   find() {
     return this.ordersService.find();
+  }
+
+  @Post("/status")
+  @ApiOperation({ summary: "Update Order Status"})
+  @ApiBody({ type: UpdateOrderStatusDto })
+  async updateOrderStatus(@Body() body: UpdateOrderStatusDto) {
+    return this.ordersService.updateOrderStatus(body);
   }
 
 }
