@@ -7,6 +7,7 @@ import { UsersModule } from "./app/users/users.module";
 import { CONFIG } from "./configs/config";
 import { MenusModule } from './app/menus/menus.module';
 import { EventsModule } from './events/events.module';
+import { OrdersModule } from './app/orders/orders.module';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { EventsModule } from './events/events.module';
     MongooseModule.forRoot(process.env.MONGO_URL),
     UsersModule,
     MenusModule,
+    OrdersModule,
     EventsModule
   ],
   controllers: [AppController],

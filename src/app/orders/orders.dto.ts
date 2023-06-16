@@ -80,3 +80,11 @@ export class CreateOrderDto {
   @IsNotEmpty()
   paymentStatus: boolean;
 }
+
+export class UpdateOrderStatusDTO {
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsString()
+  @IsEnum(OrderStatus)
+  status: string;
+}
