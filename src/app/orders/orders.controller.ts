@@ -39,4 +39,10 @@ export class OrdersController {
     return this.ordersService.updateOrderStatus(body);
   }
 
+  @Get("tracking/:id")
+  @ApiOperation({ summary: "Get Order By Order Id"})
+  async findOrderById(@Param("id") id: string) {
+    return this.ordersService.findOrderById(id);
+  }
+
 }

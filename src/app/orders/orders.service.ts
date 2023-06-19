@@ -45,11 +45,17 @@ export class OrdersService {
   async updateOrderStatus(data: any): Promise<{ message: string }> {
     // console.log("log order service ----------->", {_id : data.orderId }, {status: data.OrderStatus});
    return  this.orderModel.updateOne({_id : data.orderId }, {status: data.OrderStatus} ).then((res) => {
-     console.log(res);
       return { message: "Status Changed" };
     }).catch(err => {
-      console.log(err);
       return err
+    });
+  }
+
+  async findOrderById(id: string): Promise<Order>{
+    return this.orderModel.findById(id).then(res => {
+      return res
+    }).catch(err => {
+      throw new BadRequestException(err);
     });
   }
 }
