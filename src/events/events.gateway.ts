@@ -45,8 +45,8 @@ export class EventsGateway implements OnGatewayInit {
 
   @SubscribeMessage("join")
   handleJoinEvent(client: Socket, orderId: string): void {
+    this.server.emit("join", `Order Id ${orderId}`);
     client.join(orderId);
-    this.server.emit("join", {message: "Room Joined"});
   }
 
   joinEvent(orderId) {

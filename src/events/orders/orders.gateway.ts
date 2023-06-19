@@ -7,7 +7,7 @@ import { Logger } from "@nestjs/common";
   cors: {
     origin: "*"
   },
-  namespace: "orders"
+  namespace: ""
 })
 export class OrdersGateway implements OnGatewayInit {
   @WebSocketServer()
@@ -20,7 +20,8 @@ export class OrdersGateway implements OnGatewayInit {
 
   @SubscribeMessage("orderUpdated")
   handleUpdateOrderEvent(client: Socket, payload: any): any {
-    this.server.to(payload.room).emit("orderUpdated", payload);
+    console.log({ payload });
+      this.server.to(payload.room).emit("orderUpdated", payload);
   }
 
   updatedOrder(data) {
