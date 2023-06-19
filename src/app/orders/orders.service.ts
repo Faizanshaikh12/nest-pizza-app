@@ -55,7 +55,7 @@ export class OrdersService {
     if (_.isEmpty(order)) throw new NotFoundException('Order id is not found');
 
     await this.orderModel.updateOne({ _id: orderId }, { $set: { status } });
-    this.orderGateway.updatedOrder({ _id: orderId, status });
+    this.orderGateway.updatedOrder({ room: orderId, _id: orderId, status });
 
     return { message: 'Order Is Successfully' };
   }

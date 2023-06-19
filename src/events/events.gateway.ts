@@ -3,34 +3,53 @@ import {
   OnGatewayInit,
   SubscribeMessage,
   WebSocketGateway,
-  WebSocketServer,
-} from '@nestjs/websockets';
-import { Server, Socket } from 'socket.io';
-import { Logger } from '@nestjs/common';
+  WebSocketServer, WsException
+} from "@nestjs/websockets";
+import { Server, Socket } from "socket.io";
+import { ArgumentsHost, Catch, Logger, UnauthorizedException, UseGuards } from "@nestjs/common";
+import { AuthSocketGuard, WSAuthMiddleware } from "../guards/authSocket.guard";
+import { JwtService } from "@nestjs/jwt";
+
+
+@Catch(WsException)
+export class WsExceptionFilter implements WsExceptionFilter {
+  catch(exception: WsException, host: ArgumentsHost) {
+    const client = host.switchToWs().getClient();
+    client.emit('error', { message: exception.message });
+  }
+}
 
 @WebSocketGateway({
-  transports: ['websocket'],
+  transports: ["websocket"],
   cors: {
-    origin: '*',
+    origin: "*"
   },
-  namespace:"/"
+  namespace: "/"
 })
 export class EventsGateway implements OnGatewayInit {
   @WebSocketServer()
   server: Server;
-  private logger: Logger = new Logger('JoinGateway');
+  private logger: Logger = new Logger("JoinGateway");
 
   afterInit(server: any): any {
-    this.logger.log('Initialized');
+    this.logger.log("Initialized");
   }
 
-  @SubscribeMessage('join')
+  handleDisconnect(client: Socket) {
+    console.log("client disconnect", client.id);
+  }
+
+  handleConnection(client: Socket, ...args: any[]) {
+    console.log('client connect', client.id);
+  }
+
+  @SubscribeMessage("join")
   handleJoinEvent(client: Socket, orderId: string): void {
-    console.log({ orderId });
     client.join(orderId);
+    this.server.emit("join", {message: "Room Joined"});
   }
 
   joinEvent(orderId) {
-    this.server.emit('join', orderId);
+    this.server.emit("join", orderId);
   }
 }

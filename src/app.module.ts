@@ -21,7 +21,7 @@ import { OrdersModule } from './app/orders/orders.module';
     UsersModule,
     MenusModule,
     OrdersModule,
-    EventsModule
+    EventsModule,
   ],
   controllers: [AppController],
   providers: [AppService]

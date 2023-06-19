@@ -20,7 +20,7 @@ export class OrdersGateway implements OnGatewayInit {
 
   @SubscribeMessage("orderUpdated")
   handleUpdateOrderEvent(client: Socket, payload: any): any {
-    this.server.to(payload.event).emit("orderUpdated", payload);
+    this.server.to(payload.room).emit("orderUpdated", payload);
   }
 
   updatedOrder(data) {
