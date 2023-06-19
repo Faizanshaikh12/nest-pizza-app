@@ -43,7 +43,7 @@ export class Order {
   @Prop({ required: true, default: false })
   paymentStatus: boolean;
 
-  @Prop({ required: true, default: OrderStatus.PENDING, enum: OrderStatus, })
+  @Prop({ required: true, default: OrderStatus.ORDER_PLACE, enum: OrderStatus, })
   status: string;
 
 }

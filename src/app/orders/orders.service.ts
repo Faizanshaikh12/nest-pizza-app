@@ -3,7 +3,6 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Order } from '../../schemas/order.schema';
 import { OrdersGateway } from '../../events/orders/orders.gateway';
-import { EventsGateway } from '../../events/events.gateway';
 import * as _ from 'lodash';
 import {OrderStatus} from "./orders.dto";
 
@@ -11,7 +10,6 @@ import {OrderStatus} from "./orders.dto";
 export class OrdersService {
   constructor(@InjectModel(Order.name) private orderModel: Model<Order>,
               private orderGateway: OrdersGateway,
-              private eventsGateway: EventsGateway,
   ) {
   }
 
@@ -20,7 +18,7 @@ export class OrdersService {
       this.orderGateway.orderPlaced(res[0]);
       return { message: 'Order Is Successfully' };
     }).catch((err) => {
-      console.log('err', err);
+      console.log("err", err);
       throw new BadRequestException(err);
     });
   }
@@ -58,5 +56,13 @@ export class OrdersService {
     this.orderGateway.updatedOrder({ room: orderId, _id: orderId, status });
 
     return { message: 'Order Is Successfully' };
+  }
+
+  async findOrderById(id: string): Promise<Order>{
+    return this.orderModel.findById(id).then(res => {
+      return res
+    }).catch(err => {
+      throw new BadRequestException(err);
+    });
   }
 }
